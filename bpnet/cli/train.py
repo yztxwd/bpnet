@@ -451,6 +451,11 @@ def train(output_dir,
         # Release the GPU
         K.clear_session()
 
+		# Release GPU memory by numba
+		from numba import cuda
+        cuda.select_device(gpu)
+        cuda.close()
+
         # remove memory
         del tr, train_dataset, valid_dataset, data
         gc.collect()
